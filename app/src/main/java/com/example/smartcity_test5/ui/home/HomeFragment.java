@@ -16,11 +16,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.smartcity_test5.MainActivity;
 import com.example.smartcity_test5.R;
+import com.example.smartcity_test5.ui.home.adapter.ServiceAdapter;
 import com.example.smartcity_test5.ui.home.pojo.Img;
+import com.example.smartcity_test5.ui.home.pojo.Item_service;
 import com.example.smartcity_test5.util.KenUtil;
 
 import org.json.JSONArray;
@@ -44,6 +48,10 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.viewFlipper_home)
     ViewFlipper viewFlipper_home;
     private List<Img> imgList = new ArrayList<>();
+    private List<Item_service> serviceList = new ArrayList<>();
+
+    @BindView(R.id.recyclerService_home)
+    RecyclerView recyclerService_home;
 
     private ActionBar actionBar;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -56,10 +64,35 @@ public class HomeFragment extends Fragment {
         unbinder = ButterKnife.bind(this,root);
 
         getLunbo();
+        getService();
 
         return root;
     }
 
+    public void getService() {
+        serviceList.clear();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String json = KenUtil.Get("http://124.93.196.45:10002/service/service/list");
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONArray jsonArray = jsonObject.getJSONArray("rows");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        int id = object.getInt("id");
+                        String serviceName = object.getString("serviceName");
+                        String url = "http://124.93.196.45:10002" + object.getString("imgUrl");
+                        serviceList.add(new Item_service(id, serviceName, url));
+                    }
+                    serviceList.add(new Item_service(0, "更多服务", "R.drawable.ic_launcher_background"));
+                    handler.sendEmptyMessage(2);
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 
     public void getLunbo() {
         new Thread(new Runnable() {
@@ -88,7 +121,8 @@ public class HomeFragment extends Fragment {
     }
 
     /**
-     * 1:lunbo
+     * 1:lunbo ok
+     * 2:service ok
      */
     private Handler handler = new Handler(){
         @Override
@@ -102,6 +136,10 @@ public class HomeFragment extends Fragment {
                         Glide.with(getContext()).load(imgList.get(i).getUrl()).into(pp);
                         viewFlipper_home.addView(pp);
                     }
+                    break;
+                case 2:
+                    recyclerService_home.setLayoutManager(new GridLayoutManager(getActivity(),5));
+                    recyclerService_home.setAdapter(new ServiceAdapter(serviceList,R.layout.item_service));
                     break;
             }
         }
