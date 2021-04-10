@@ -43,7 +43,7 @@
 
         <TextView
             android:background="#fff"
-            android:text="推荐服务"
+            android:text="热门主题"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView

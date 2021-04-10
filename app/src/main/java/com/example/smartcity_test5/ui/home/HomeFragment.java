@@ -49,9 +49,12 @@ public class HomeFragment extends Fragment {
     ViewFlipper viewFlipper_home;
     private List<Img> imgList = new ArrayList<>();
     private List<Item_service> serviceList = new ArrayList<>();
+    private List<Item_service> serviceList2 = new ArrayList<>();
 
     @BindView(R.id.recyclerService_home)
     RecyclerView recyclerService_home;
+    @BindView(R.id.recyclerService_home2)
+    RecyclerView recyclerService_home2;
 
     private ActionBar actionBar;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -140,6 +143,9 @@ public class HomeFragment extends Fragment {
                 case 2:
                     recyclerService_home.setLayoutManager(new GridLayoutManager(getActivity(),5));
                     recyclerService_home.setAdapter(new ServiceAdapter(serviceList,R.layout.item_service));
+                    serviceList2 = serviceList.subList(0,4);
+                    recyclerService_home2.setLayoutManager(new GridLayoutManager(getActivity(),2));
+                    recyclerService_home2.setAdapter(new ServiceAdapter(serviceList2,R.layout.item_service));
                     break;
             }
         }

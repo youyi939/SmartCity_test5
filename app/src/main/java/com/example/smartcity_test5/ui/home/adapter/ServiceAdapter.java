@@ -31,7 +31,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(resourceId,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(resourceId,null);              //设置为null时item为居中显示
         holder = new RecyclerView.ViewHolder(view) {};
         return holder;
     }
