@@ -3,10 +3,12 @@ package com.example.smartcity_test5.ui.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -22,10 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.smartcity_test5.MainActivity;
 import com.example.smartcity_test5.R;
+import com.example.smartcity_test5.ui.home.adapter.ItemAdapter;
 import com.example.smartcity_test5.ui.home.adapter.ServiceAdapter;
 import com.example.smartcity_test5.ui.home.pojo.Img;
+import com.example.smartcity_test5.ui.home.pojo.Item;
+import com.example.smartcity_test5.ui.home.pojo.ItemData;
 import com.example.smartcity_test5.ui.home.pojo.Item_service;
 import com.example.smartcity_test5.util.KenUtil;
+import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,11 +56,17 @@ public class HomeFragment extends Fragment {
     private List<Img> imgList = new ArrayList<>();
     private List<Item_service> serviceList = new ArrayList<>();
     private List<Item_service> serviceList2 = new ArrayList<>();
+    private List<Item> itemList = new ArrayList<>();
 
     @BindView(R.id.recyclerService_home)
     RecyclerView recyclerService_home;
     @BindView(R.id.recyclerService_home2)
     RecyclerView recyclerService_home2;
+    @BindView(R.id.tab_home)
+    TabLayout tab_home;
+    @BindView(R.id.listXinwen_home)
+    RecyclerView listXinwen_home;
+
 
     private ActionBar actionBar;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,6 +80,27 @@ public class HomeFragment extends Fragment {
 
         getLunbo();
         getService();
+        getItem();
+
+        tab_home.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Message message = new Message();
+                message.what = 4;
+                message.obj = tab.getPosition();
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         return root;
     }
@@ -123,6 +156,45 @@ public class HomeFragment extends Fragment {
         }).start();
     }
 
+    public void getItem() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String json = KenUtil.Get("http://124.93.196.45:10002/system/dict/data/type/press_category");
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        int dictCode = object.getInt("dictCode");
+                        String dictLabel = object.getString("dictLabel");
+                        List<ItemData> dataList = new ArrayList<>();
+
+                        String url = "http://124.93.196.45:10002/press/press/list?pageNum=1&pageSize=10&pressCategory=" + dictCode;
+                        String json1 = KenUtil.Get(url);
+                        JSONObject jsonObject1 = new JSONObject(json1);
+                        JSONArray jsonArray1 = jsonObject1.getJSONArray("rows");
+                        for (int j = 0; j < jsonArray1.length(); j++) {
+                            JSONObject object1 = jsonArray1.getJSONObject(j);
+                            String title = object1.getString("title");
+                            String content = object1.getString("content");
+                            String imgUrl = "http://124.93.196.45:10002" + object1.getString("imgUrl");
+                            int viewsNumber = object1.getInt("viewsNumber");
+                            String createTime = object1.getString("createTime");
+                            dataList.add(new ItemData(title, content, imgUrl, viewsNumber,createTime));
+                        }
+                        itemList.add(new Item(dictCode, dictLabel, dataList));
+                    }
+                    handler.sendEmptyMessage(3);
+
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+    }
+
     /**
      * 1:lunbo ok
      * 2:service ok
@@ -146,6 +218,18 @@ public class HomeFragment extends Fragment {
                     serviceList2 = serviceList.subList(0,4);
                     recyclerService_home2.setLayoutManager(new GridLayoutManager(getActivity(),2));
                     recyclerService_home2.setAdapter(new ServiceAdapter(serviceList2,R.layout.item_service));
+                    break;
+                case 3:
+                    for (int i = 0; i < itemList.size() ; i++) {
+                        tab_home.addTab(tab_home.newTab().setText(itemList.get(i).getLabel()).setTag(itemList.get(i).getCode()));
+                    }
+                    listXinwen_home.setLayoutManager(new GridLayoutManager(getActivity(),1));
+                    listXinwen_home.setAdapter(new ItemAdapter(itemList.get(0).getDataList(),R.layout.item_itemdata));
+                    break;
+                case 4:
+                    int position = (int)msg.obj;
+                    listXinwen_home.setLayoutManager(new GridLayoutManager(getActivity(),1));
+                    listXinwen_home.setAdapter(new ItemAdapter(itemList.get(position).getDataList(),R.layout.item_itemdata));
                     break;
             }
         }
