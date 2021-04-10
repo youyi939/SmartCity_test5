@@ -12,8 +12,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        >
+        android:layout_marginBottom="50dp">
 
         <androidx.appcompat.widget.SearchView
             app:defaultQueryHint="请输入搜索的内容"
