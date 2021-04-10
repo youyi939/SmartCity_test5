@@ -23,8 +23,4 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 }
