@@ -6,13 +6,11 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.smartcity_test5.BusInfoActivity;
 import com.example.smartcity_test5.R;
 
 import butterknife.BindView;
@@ -25,6 +23,9 @@ public class BusDingzhi2Activity extends AppCompatActivity {
     TextView data;
     @BindView(R.id.time)
     TextView time;
+
+    public static String data_s;
+    public static String time_s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,8 @@ public class BusDingzhi2Activity extends AppCompatActivity {
         if (time.getText().equals("") || data.getText().equals("")){
             Toast.makeText(BusDingzhi2Activity.this,"请设置日期时间",Toast.LENGTH_SHORT).show();
         }else {
+            data_s = data.getText().toString();
+            time_s = time.getText().toString();
             Intent intent = new Intent(BusDingzhi2Activity.this, BusInfoActivity.class);
             startActivity(intent);
         }

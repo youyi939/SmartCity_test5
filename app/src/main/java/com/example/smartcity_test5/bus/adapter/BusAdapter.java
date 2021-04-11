@@ -1,7 +1,6 @@
 package com.example.smartcity_test5.bus.adapter;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +98,7 @@ public class BusAdapter extends BaseExpandableListAdapter {
         if (view == null){
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_buschaild,null);
         }
-        TextView name = view.findViewById(R.id.name);
+        TextView name = view.findViewById(R.id.name_bus);
         name.setText(station.getName());
         return view;
     }
