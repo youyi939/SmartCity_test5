@@ -12,8 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartCity_test5"
         android:usesCleartextTraffic="true">
-        <activity android:name=".bus.BusInfoActivity" android:label="乘车信息"></activity>
-        <activity android:name=".bus.BusDingzhi2Activity"  android:label="定制班车"/>
+        <activity android:name=".bus.BusSubmitActivity"></activity>
+        <activity
+            android:name=".bus.BusInfoActivity"
+            android:label="乘车信息" />
+        <activity
+            android:name=".bus.BusDingzhi2Activity"
+            android:label="定制班车" />
         <activity
             android:name=".bus.BusDingzhiActivity"
             android:label="定制班车" />

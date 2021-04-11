@@ -77,6 +77,7 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="11"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
@@ -135,7 +136,7 @@
         android:layout_width="222dp"
         android:layout_height="61dp"
         android:layout_marginTop="40dp"
-        android:text="提交订单"
+        android:text="下一页"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
