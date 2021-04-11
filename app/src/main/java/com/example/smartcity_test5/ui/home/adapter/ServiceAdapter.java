@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.smartcity_test5.R;
+import com.example.smartcity_test5.bus.BusMainActivity;
 import com.example.smartcity_test5.ui.home.pojo.Item_service;
 
 import java.util.List;
@@ -31,8 +32,9 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(resourceId,null);              //设置为null时item为居中显示
-        holder = new RecyclerView.ViewHolder(view) {};
+        View view = LayoutInflater.from(parent.getContext()).inflate(resourceId, null);              //设置为null时item为居中显示
+        holder = new RecyclerView.ViewHolder(view) {
+        };
         return holder;
     }
 
@@ -43,18 +45,20 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView imageView = holder.itemView.findViewById(R.id.img_service);
 
         name.setText(test.getServiceName());
-        if (test.getServiceName().equals("更多服务")){
+        if (test.getServiceName().equals("更多服务")) {
             imageView.setImageResource(R.drawable.ic_launcher_foreground);
-        }else {
+        } else {
             Glide.with(holder.itemView.getContext()).load(test.getUrl()).into(imageView);
         }
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (test.getServiceName().equals("更多服务")){
-//                    Intent intent = new Intent(holder.itemView.getContext(), AllServiceActivity.class);
-//                    holder.itemView.getContext().startActivity(intent);
+                if (test.getServiceName().equals("更多服务")) {
+
+                } else if (test.getServiceName().equals("智慧巴士")) {
+                    Intent intent = new Intent(holder.itemView.getContext(), BusMainActivity.class);
+                    holder.itemView.getContext().startActivity(intent);
                 }
             }
         });
