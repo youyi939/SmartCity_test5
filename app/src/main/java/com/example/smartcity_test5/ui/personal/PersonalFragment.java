@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.smartcity_test5.LoginActivity;
 import com.example.smartcity_test5.MainActivity;
 import com.example.smartcity_test5.R;
+import com.example.smartcity_test5.ui.personal.activity.ChangeActivity;
 import com.example.smartcity_test5.ui.personal.activity.UserInfoActivity;
 import com.example.smartcity_test5.util.KenUtil;
 
@@ -75,6 +76,8 @@ public class PersonalFragment extends Fragment {
                 getActivity().startActivity(intent);
                 break;
             case R.id.change:
+                Intent intent1 = new Intent(getContext(), ChangeActivity.class);
+                getActivity().startActivity(intent1);
                 break;
             case R.id.order:
                 break;

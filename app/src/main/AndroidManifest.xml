@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartCity_test5"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.personal.activity.ChangeActivity" android:label="修改密码" android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".ui.personal.activity.UserInfoActivity"
             android:label="个人详情"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".LoginActivity" />
-
         <activity
             android:name=".bus.BusSubmitActivity"
             android:label="提交订单" />
