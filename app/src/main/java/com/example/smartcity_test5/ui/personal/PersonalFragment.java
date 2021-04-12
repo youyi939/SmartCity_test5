@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.smartcity_test5.LoginActivity;
 import com.example.smartcity_test5.MainActivity;
 import com.example.smartcity_test5.R;
+import com.example.smartcity_test5.ui.personal.activity.UserInfoActivity;
 import com.example.smartcity_test5.util.KenUtil;
 
 import org.json.JSONException;
@@ -60,11 +62,91 @@ public class PersonalFragment extends Fragment {
         unbinder = ButterKnife.bind(this,root);
         sharedPreferences = getActivity().getSharedPreferences("data",0);
         editor = getActivity().getSharedPreferences("data",0).edit();
-
+        getToken();
+        getUserInfo();
         return root;
     }
 
+    @OnClick({R.id.userInfo,R.id.change,R.id.order})
+    public void test(View view){
+        switch (view.getId()){
+            case R.id.userInfo:
+                Intent intent = new Intent(getContext(), UserInfoActivity.class);
+                getActivity().startActivity(intent);
+                break;
+            case R.id.change:
+                break;
+            case R.id.order:
+                break;
+            case R.id.feedback:
+                break;
+        }
+    }
 
+    public void getToken(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String port = sharedPreferences.getString("port","10002");
+                String ip = sharedPreferences.getString("ip","124.93.196.45");
+                String username = sharedPreferences.getString("username","kenchen");
+                String password = sharedPreferences.getString("password","123");
+                try {
+                    JSONObject object = new JSONObject();
+                    object.put("username",username);
+                    object.put("password",password);
+                    String json = KenUtil.Post("http://"+ip+":"+port+"/login","",object.toString());
+                    JSONObject jsonObject = new JSONObject(json);
+                    int code = jsonObject.getInt("code");
+                    if (code == 200){
+                        String token = jsonObject.getString("token");
+                        editor.putString("token",token);
+                        editor.commit();
+                    }else {
+
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void getUserInfo(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String token = sharedPreferences.getString("token","k");
+                    String json = KenUtil.Get_T("http://124.93.196.45:10002/getInfo",token);
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONObject object = jsonObject.getJSONObject("user");
+                    String avatar ="http://124.93.196.45:10002"+ object.getString("avatar");
+                    String nickName = object.getString("nickName");
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Glide.with(getContext()).load(avatar).into(imageView);
+                            nike.setText(nickName);
+                        }
+                    });
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+    }
+
+
+    @OnClick(R.id.logout)
+    public void logout() {
+        editor.clear().commit();
+        editor.putBoolean("guide",false);
+        editor.commit();
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        getActivity().startActivity(intent);
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

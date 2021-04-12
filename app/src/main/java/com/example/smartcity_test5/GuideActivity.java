@@ -176,6 +176,7 @@ public class GuideActivity extends AppCompatActivity {
                                             Toast.makeText(GuideActivity.this,"端口校验成功",Toast.LENGTH_SHORT).show();
                                             editor.putString("ip",ip1);
                                             editor.putString("port",port1);
+                                            editor.putBoolean("guide",false);
                                             editor.commit();
                                             dialog.dismiss();
                                         }

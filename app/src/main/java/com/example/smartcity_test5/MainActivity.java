@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
-        if (sharedPreferences.getString("ip","k").equals("k")){
+        if (sharedPreferences.getBoolean("guide",true)){
             Intent intent = new Intent(MainActivity.this,GuideActivity.class);
             startActivity(intent);
         }
