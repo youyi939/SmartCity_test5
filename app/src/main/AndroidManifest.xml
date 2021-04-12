@@ -12,7 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartCity_test5"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.personal.activity.FeedbackActivity" android:label="意见反馈" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".ui.personal.activity.OrderActivity"></activity>
+        <activity
+            android:name=".ui.personal.activity.FeedbackActivity"
+            android:label="意见反馈"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ui.personal.activity.ChangeActivity"
             android:label="修改密码"
@@ -36,6 +40,7 @@
             android:label="定制班车" />
         <activity
             android:name=".bus.BusMainActivity"
+            android:parentActivityName=".MainActivity"
             android:label="智慧巴士" />
         <activity
             android:name=".GuideActivity"

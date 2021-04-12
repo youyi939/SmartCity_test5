@@ -24,6 +24,7 @@ import com.example.smartcity_test5.MainActivity;
 import com.example.smartcity_test5.R;
 import com.example.smartcity_test5.ui.personal.activity.ChangeActivity;
 import com.example.smartcity_test5.ui.personal.activity.FeedbackActivity;
+import com.example.smartcity_test5.ui.personal.activity.OrderActivity;
 import com.example.smartcity_test5.ui.personal.activity.UserInfoActivity;
 import com.example.smartcity_test5.util.KenUtil;
 
@@ -81,6 +82,8 @@ public class PersonalFragment extends Fragment {
                 getActivity().startActivity(intent1);
                 break;
             case R.id.order:
+                Intent intent3 = new Intent(getContext(), OrderActivity.class);
+                getActivity().startActivity(intent3);
                 break;
             case R.id.feedback:
                 Intent intent2 = new Intent(getContext(), FeedbackActivity.class);
