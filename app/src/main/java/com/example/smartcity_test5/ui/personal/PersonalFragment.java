@@ -23,6 +23,7 @@ import com.example.smartcity_test5.LoginActivity;
 import com.example.smartcity_test5.MainActivity;
 import com.example.smartcity_test5.R;
 import com.example.smartcity_test5.ui.personal.activity.ChangeActivity;
+import com.example.smartcity_test5.ui.personal.activity.FeedbackActivity;
 import com.example.smartcity_test5.ui.personal.activity.UserInfoActivity;
 import com.example.smartcity_test5.util.KenUtil;
 
@@ -68,7 +69,7 @@ public class PersonalFragment extends Fragment {
         return root;
     }
 
-    @OnClick({R.id.userInfo,R.id.change,R.id.order})
+    @OnClick({R.id.userInfo,R.id.change,R.id.order,R.id.feedback})
     public void test(View view){
         switch (view.getId()){
             case R.id.userInfo:
@@ -82,6 +83,8 @@ public class PersonalFragment extends Fragment {
             case R.id.order:
                 break;
             case R.id.feedback:
+                Intent intent2 = new Intent(getContext(), FeedbackActivity.class);
+                getActivity().startActivity(intent2);
                 break;
         }
     }
@@ -105,8 +108,6 @@ public class PersonalFragment extends Fragment {
                         String token = jsonObject.getString("token");
                         editor.putString("token",token);
                         editor.commit();
-                    }else {
-
                     }
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
