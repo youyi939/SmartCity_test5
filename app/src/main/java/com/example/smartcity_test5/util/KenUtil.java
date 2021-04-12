@@ -54,5 +54,27 @@ public class KenUtil {
         return response.body().string();
     }
 
+    /**
+     * 修改密码 PUT_T
+     * @param url
+     * @param token
+     * @param msg
+     * @return
+     * @throws IOException
+     */
+    public static String Put_T(String url,String token ,String msg) throws IOException {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, msg);
+        Request request = new Request.Builder()
+                .url(url)
+                .method("PUT", body)
+                .addHeader("Authorization",token)
+                .addHeader("Content-Type", "application/json")
+                .build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
 
 }

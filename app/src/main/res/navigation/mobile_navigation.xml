@@ -28,4 +28,10 @@
         android:name="com.example.smartcity_test5.ui.personal.PersonalFragment"
         android:label="个人中心"
         tools:layout="@layout/personal_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_xinwen"
+        android:name="com.example.smartcity_test5.ui.XinWen.XinwenFragment"
+        android:label="新闻"
+        tools:layout="@layout/xinwen_fragment" />
 </navigation>

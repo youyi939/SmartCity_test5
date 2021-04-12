@@ -41,46 +41,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this,GuideActivity.class);
             startActivity(intent);
         }
-        getToken();
+        if (sharedPreferences.getString("token","k").equals("k")){
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+        }
 
     }
 
-    public void getToken(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String port = sharedPreferences.getString("port","10002");
-                String ip = sharedPreferences.getString("ip","124.93.196.45");
-                try {
-                    JSONObject object = new JSONObject();
-                    object.put("username","KenChen");
-                    object.put("password","123");
-                    String json = KenUtil.Post("http://"+ip+":"+port+"/login","",object.toString());
-                    JSONObject jsonObject = new JSONObject(json);
-                    int code = jsonObject.getInt("code");
-                    if (code == 200){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(MainActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        String token = jsonObject.getString("token");
-                        editor.putString("token",token);
-                        editor.commit();
-                    }else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(MainActivity.this,"登陆失败",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
+
 
 }

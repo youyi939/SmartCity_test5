@@ -15,7 +15,7 @@
         android:text="个人详情"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nikeName" />
+        app:layout_constraintTop_toBottomOf="@+id/nike_personal" />
 
     <Button
         android:id="@+id/change"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/feedback" />
 
     <ImageView
-        android:id="@+id/img"
+        android:id="@+id/img_personal"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="30dp"
@@ -64,12 +64,12 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/nikeName"
+        android:id="@+id/nike_personal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="昵称"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img" />
+        app:layout_constraintTop_toBottomOf="@+id/img_personal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

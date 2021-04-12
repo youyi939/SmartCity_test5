@@ -67,6 +67,9 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.listXinwen_home)
     RecyclerView listXinwen_home;
 
+    Thread thread;
+    Thread thread1;
+    Thread thread2;
 
     private ActionBar actionBar;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -107,7 +110,7 @@ public class HomeFragment extends Fragment {
 
     public void getService() {
         serviceList.clear();
-        new Thread(new Runnable() {
+        thread1 =  new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -127,11 +130,12 @@ public class HomeFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        thread1.start();
     }
 
     public void getLunbo() {
-        new Thread(new Runnable() {
+        thread2 =  new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -153,11 +157,12 @@ public class HomeFragment extends Fragment {
                 }
 
             }
-        }).start();
+        });
+        thread2.start();
     }
 
     public void getItem() {
-        new Thread(new Runnable() {
+        thread =  new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -192,7 +197,8 @@ public class HomeFragment extends Fragment {
                 }
 
             }
-        }).start();
+        });
+        thread.start();
     }
 
     /**
@@ -239,5 +245,8 @@ public class HomeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        thread.interrupt();
+        thread1.interrupt();
+        thread2.interrupt();
     }
 }
