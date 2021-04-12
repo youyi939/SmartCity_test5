@@ -12,7 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartCity_test5"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.personal.activity.OrderActivity"></activity>
+        <activity android:name=".traffic.TrafficListActivity" android:label="违章记录" android:parentActivityName=".traffic.TrafficActivity"></activity>
+        <activity
+            android:name=".traffic.TrafficActivity"
+            android:label="违章查询"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ui.personal.activity.OrderActivity"
+            android:label="订单列表"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ui.personal.activity.FeedbackActivity"
             android:label="意见反馈"
@@ -40,8 +48,8 @@
             android:label="定制班车" />
         <activity
             android:name=".bus.BusMainActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="智慧巴士" />
+            android:label="智慧巴士"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".GuideActivity"
             android:label="引导页" />

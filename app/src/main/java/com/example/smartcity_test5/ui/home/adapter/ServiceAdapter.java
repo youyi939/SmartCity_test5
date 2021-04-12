@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.smartcity_test5.R;
 import com.example.smartcity_test5.bus.BusMainActivity;
+import com.example.smartcity_test5.traffic.TrafficActivity;
 import com.example.smartcity_test5.ui.home.pojo.Item_service;
 
 import java.util.List;
@@ -58,6 +59,9 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 } else if (test.getServiceName().equals("智慧巴士")) {
                     Intent intent = new Intent(holder.itemView.getContext(), BusMainActivity.class);
+                    holder.itemView.getContext().startActivity(intent);
+                }else if (test.getServiceName().equals("违章查询")){
+                    Intent intent = new Intent(holder.itemView.getContext(), TrafficActivity.class);
                     holder.itemView.getContext().startActivity(intent);
                 }
             }
